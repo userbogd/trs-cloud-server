@@ -94,3 +94,20 @@ apt update
 apt install webmin
 ```
 5. Проверяем доступ по адресу https://your_domain:10000
+
+
+### Установка сервера БД MySQL
+
+### Установка средства администрирования БД phpMyAdmin
+
+### Сохранение и восстановление базы данных пользователей MQTT брокера
+
+### Установка и настройка MQTT брокера EMQX
+
+### Установка сервера БД PostgreSQL 
+
+### Восстановление базы данных Chirpstack LoRaWAN сервера
+
+### Установка и настройка ChirpstackNetworkServer и ChirpstackApplicationServer
+
+### Установка и настройка PPP VPN сервера
