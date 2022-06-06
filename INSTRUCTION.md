@@ -1,5 +1,4 @@
 ### Исходные требования
-
 1. Установленный дистрибутив Ubuntu 20.04 
 2. Права админимтратора
 3. Доступ по SSH
@@ -9,8 +8,8 @@
 sudo su
 ```
 
-### Предварительная настройка iptables
 
+### Предварительная настройка iptables
 1. Устанавливаем пакет для сохранения временных настроек iptables
 ```
 apt-get install iptables-persistent
@@ -29,6 +28,8 @@ https://github.com/userbogd/trs-cloud-server/blob/main/iptables.sh
 net.ipv4.ip_forward=1
 ```
 и перезапустить сетевые службы или перезагрузить сервер
+
+
 
 ### Установка веб-сервера APACHE2
 1. Установка непосредственно apache2
@@ -54,6 +55,7 @@ systemctl start apache2
 systemctl restart apache2
 ```
 
+
 ### Получение сертификатов Let'sEncrypt
 1. Устанавливаем sertbot и плагин для apache2
 ```
@@ -72,3 +74,23 @@ systemctl status certbot.timer
 ```
 certbot renew --dry-run
 ```
+
+### Установка Webmin
+1. Добавляем репозиторий webmin в систему
+```
+echo "deb http://download.webmin.com/download/repository sarge contrib"   | tee -a /etc/apt/sources.list
+```
+2. Устанавливаем пакет для защищенной связи и хранения данных gnupg
+```
+apt install gnupg
+```
+3. Устанавливаем ключ репозитория и обновляем список пакетов
+```
+wget -q -O- http://www.webmin.com/jcameron-key.asc | sudo apt-key add
+apt update
+```
+4. Устанавливаем непосредственно webmin
+```
+apt install webmin
+```
+5. Проверяем доступ по адресу https://your_domain:10000
