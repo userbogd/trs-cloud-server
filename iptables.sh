@@ -3,8 +3,9 @@
 # Flush all current rules from iptables
 #
 
-#INET_ADAPTER="ens3"
+INET_ADAPTER="ens3"  #здесь имя основного сетевого адаптера с интернетом  
 
+#очищаем все таблицы
 iptables -t filter -F
 iptables -t nat -F
 iptables -t mangle -F
@@ -50,16 +51,16 @@ iptables -A OUTPUT -p 47 -j ACCEPT
 iptables -F FORWARD
 iptables -A FORWARD -j ACCEPT
 # Включить NAT для интерфейсов eth0 и ppp*
-iptables -A POSTROUTING -t nat -o ens3 -j MASQUERADE
+iptables -A POSTROUTING -t nat -o $INET_ADAPTER -j MASQUERADE
 iptables -A POSTROUTING -t nat -o ppp+ -j MASQUERADE
 
 iptables -A INPUT -p udp --dport 60600  -j ACCEPT
 
-#forward port 60600 on ens3  to ip  172.16.0.10 port 60500
-iptables -t nat -A PREROUTING -i ens3  -p udp --dport 60600 -j DNAT --to-destination 172.16.0.10:60500
+#forward port 60600 on INET_ADAPTER  to ip  172.16.0.10 port 60500
+iptables -t nat -A PREROUTING -i $INET_ADAPTER  -p udp --dport 60600 -j DNAT --to-destination 172.16.0.10:60500
 
-#forward port 60601 on ens3  to ip  172.16.0.20 port 60500
-iptables -t nat -A PREROUTING -i ens3  -p udp --dport 60601 -j DNAT --to-destination 172.16.0.20:60500
+#forward port 60601 on INET_ADAPTER  to ip  172.16.0.20 port 60500
+iptables -t nat -A PREROUTING -i $INET_ADAPTER  -p udp --dport 60601 -j DNAT --to-destination 172.16.0.20:60500
 
 #PING
 iptables -A INPUT -p icmp -j ACCEPT
