@@ -37,11 +37,38 @@ apt update
 apt install apache2
 systemctl status apache2
 ```
-2. Настройка виртуальных хостов.
-	- создаем каталоги с содержимым сайтов:
-	```
-	mkdir /var/www/html/tmrsystems.ru
-	mkdir /var/www/html/iotronic.cloud
-	```
-3.  
+2. Настройка виртуальных хостов.	
+- восстанавливаем структуру каталога /var/www
+- восстанавливаем структуру каталога конфигураций /etc/apache2/sites-available
+- применяем конфигурации 
+```
+a2ensite iotronic.cloud.conf
+a2ensite m1.iotronic.cloud.conf
+a2ensite www.iotronic.cloud.conf
+a2ensite tmrsystems.ru.conf
+```
+3. Команды управления сервером 
+```
+systemctl stop apache2
+systemctl start apache2
+systemctl restart apache2
+```
 
+### Получение сертификатов Let'sEncrypt
+1. Устанавливаем sertbot и плагин для apache2
+```
+apt install certbot python3-certbot-apache
+``` 
+2. Запускаем процедуру получения сертификатов. Отвечаем на вопросы интерактивной установки.
+Принимаем предложение сделать редирект всех запросов на 443 ssl порт.
+```
+certbot --apache
+```
+3. Прверяем планировщик обновлений сертификата
+```
+systemctl status certbot.timer
+```
+4. Повторный запуск sertbot в тестовом режиме для проверки валидности установки 
+```
+certbot renew --dry-run
+```
