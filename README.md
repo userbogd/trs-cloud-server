@@ -100,6 +100,23 @@ apt install webmin
 <br/><br/>
 
 ### Установка сервера БД MySQL
+По умолчанию в дистрибутив Ubuntu 20.04 включен пакет MySQL 8.0 Ввиду его прожорливости и
+недостаточного тестирования совместно с плагином emqx_auth_mysql, принято решение использовать 
+версию MySQL 5.7
+1. Добавляем репозиторий с MySQL 5.7
+```
+wget https://dev.mysql.com/get/mysql-apt-config_0.8.12-1_all.deb
+dpkg -i mysql-apt-config_0.8.12-1_all.deb
+```
+Выбираем в списке Ubuntu Bionic, затем опцию MySQL Server & Cluster и mysql-5.7
+
+2. Обновляем список пакетов в репозиториях, добавляем ключ репозитория с mysql-5.7 и снова обновляем список
+```
+apt update
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 467B942D3A79BD29
+apt update
+```
+
 <br/><br/>
 ### Установка средства администрирования БД phpMyAdmin
 <br/><br/>
