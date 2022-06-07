@@ -9,7 +9,7 @@
 ```
 sudo su
 ```
-
+<br/><br/>
 
 ### Предварительная настройка iptables
 1. Устанавливаем пакет для сохранения временных настроек iptables
@@ -31,7 +31,7 @@ net.ipv4.ip_forward=1
 ```
 и перезапустить сетевые службы или перезагрузить сервер
 
-
+<br/><br/>
 
 ### Установка веб-сервера APACHE2
 1. Установка непосредственно apache2
@@ -56,7 +56,7 @@ systemctl stop apache2
 systemctl start apache2
 systemctl restart apache2
 ```
-
+<br/><br/>
 
 ### Получение сертификатов Let'sEncrypt
 1. Устанавливаем sertbot и плагин для apache2
@@ -76,6 +76,7 @@ systemctl status certbot.timer
 ```
 certbot renew --dry-run
 ```
+<br/><br/>
 
 ### Установка Webmin
 1. Добавляем репозиторий webmin в систему
@@ -96,20 +97,20 @@ apt update
 apt install webmin
 ```
 5. Проверяем доступ по адресу https://your_domain:10000
-
+<br/><br/>
 
 ### Установка сервера БД MySQL
-
+<br/><br/>
 ### Установка средства администрирования БД phpMyAdmin
-
+<br/><br/>
 ### Сохранение и восстановление базы данных пользователей MQTT брокера
-
+<br/><br/>
 ### Установка и настройка MQTT брокера EMQX
-
+<br/><br/>
 ### Установка сервера БД PostgreSQL 
-
+<br/><br/>
 ### Восстановление базы данных Chirpstack LoRaWAN сервера
-
+<br/><br/>
 ### Установка и настройка ChirpstackNetworkServer и ChirpstackApplicationServer
-
+<br/><br/>
 ### Установка и настройка PPP VPN сервера
