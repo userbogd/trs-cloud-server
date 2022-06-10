@@ -162,8 +162,19 @@ systemctl restart apache2
 ### Установка и настройка MQTT брокера EMQX
 <br/><br/>
 ### Установка сервера БД PostgreSQL 
+1. Обновляем пакеты и устанавливаем сервер БД
+```
+apt update
+apt install postgresql postgresql-contrib
+```
+2. В процессе установки создается системный пользователь с именем postgres, который связан с ролью Postgres в БД. От его имени и 
+необходимо проводить все мероприятия с БД.
+3. Создание пользователей бэкап и восстановление удобно делать через модуль webmin. Для того чтобы появилась оснастка, необходимо 
+в webmin надо нажать Refresh Modules в главном меню и дальше заходить в Servers->PostgreSQL Database Server. 
+
 <br/><br/>
 ### Восстановление базы данных Chirpstack LoRaWAN сервера
+
 <br/><br/>
 ### Установка и настройка ChirpstackNetworkServer и ChirpstackApplicationServer
 <br/><br/>
