@@ -38,29 +38,35 @@ iptables -A INPUT -p tcp --dport 8883 -j ACCEPT
 iptables -A INPUT -p tcp --dport 10000 -j ACCEPT
 iptables -A INPUT -p tcp --dport 18083 -j ACCEPT
 iptables -A INPUT -p tcp --dport 20080 -j ACCEPT
-
-# PPP VPN
-iptables -A INPUT -i ppp+ -j ACCEPT
-iptables -A OUTPUT -o ppp+ -j ACCEPT
-# Пропускать входящие соединения на порт 1723 (PPTP)
-iptables -A INPUT -p tcp --dport 1723 -j ACCEPT
-# Пропускать все пакеты GRE
-iptables -A INPUT -p 47 -j ACCEPT
-iptables -A OUTPUT -p 47 -j ACCEPT
-# Включить форвардинг IP
-iptables -F FORWARD
-iptables -A FORWARD -j ACCEPT
-# Включить NAT для интерфейсов eth0 и ppp*
-iptables -A POSTROUTING -t nat -o $INET_ADAPTER -j MASQUERADE
-iptables -A POSTROUTING -t nat -o ppp+ -j MASQUERADE
-
 iptables -A INPUT -p udp --dport 60600  -j ACCEPT
 
+#OpenVPN
+iptables -A INPUT -p tcp --dport 1194 -j ACCEPT
+iptables -A INPUT -i tun+ -j ACCEPT
+iptables -A FORWARD -i tun+ -j ACCEPT
+iptables -t nat -A POSTROUTING -s 10.10.99.0/24 -o $INET_ADAPTER -j MASQUERADE
+
+# PPP VPN
+#iptables -A INPUT -i ppp+ -j ACCEPT
+#iptables -A OUTPUT -o ppp+ -j ACCEPT
+# Пропускать входящие соединения на порт 1723 (PPTP)
+#iptables -A INPUT -p tcp --dport 1723 -j ACCEPT
+# Пропускать все пакеты GRE
+#iptables -A INPUT -p 47 -j ACCEPT
+#iptables -A OUTPUT -p 47 -j ACCEPT
+# Включить форвардинг IP
+#iptables -F FORWARD
+#iptables -A FORWARD -j ACCEPT
+# Включить NAT для интерфейсов eth0 и ppp*
+#iptables -A POSTROUTING -t nat -o $INET_ADAPTER -j MASQUERADE
+#iptables -A POSTROUTING -t nat -o ppp+ -j MASQUERADE
+
+
 #forward port 60600 on INET_ADAPTER  to ip  172.16.0.10 port 60500
-iptables -t nat -A PREROUTING -i $INET_ADAPTER  -p udp --dport 60600 -j DNAT --to-destination 172.16.0.10:60500
+#iptables -t nat -A PREROUTING -i $INET_ADAPTER  -p udp --dport 60600 -j DNAT --to-destination 172.16.0.10:60500
 
 #forward port 60601 on INET_ADAPTER  to ip  172.16.0.20 port 60500
-iptables -t nat -A PREROUTING -i $INET_ADAPTER  -p udp --dport 60601 -j DNAT --to-destination 172.16.0.20:60500
+#iptables -t nat -A PREROUTING -i $INET_ADAPTER  -p udp --dport 60601 -j DNAT --to-destination 172.16.0.20:60500
 
 #PING
 iptables -A INPUT -p icmp -j ACCEPT
