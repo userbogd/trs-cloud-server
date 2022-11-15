@@ -11,6 +11,14 @@ sudo su
 ```
 <br/><br/>
 
+### Настройка доступа по SSH
+1. В файле /etc/ssh/sshd_config меняем строку #PermitRootLogin prohibit-password на:
+```
+PermitRootLogin yes
+```
+<br/><br/>
+
+
 ### Предварительная настройка iptables
 1. Устанавливаем пакет для сохранения временных настроек iptables
 ```
@@ -32,6 +40,29 @@ net.ipv4.ip_forward=1
 и перезапустить сетевые службы или перезагрузить сервер
 
 <br/><br/>
+
+
+### Установка Webmin
+1. Добавляем репозиторий webmin в систему
+```
+echo "deb http://download.webmin.com/download/repository sarge contrib"   | tee -a /etc/apt/sources.list
+```
+2. Устанавливаем пакет для защищенной связи и хранения данных gnupg
+```
+apt install gnupg
+```
+3. Устанавливаем ключ репозитория и обновляем список пакетов
+```
+wget -q -O- http://www.webmin.com/jcameron-key.asc | sudo apt-key add
+apt update
+```
+4. Устанавливаем непосредственно webmin
+```
+apt install webmin
+```
+5. Проверяем доступ по адресу https://your_domain:10000
+<br/><br/>
+
 
 ### Установка веб-сервера APACHE2
 1. Установка непосредственно apache2
@@ -56,48 +87,7 @@ systemctl stop apache2
 systemctl start apache2
 systemctl restart apache2
 ```
-<br/><br/>
-
-### Получение сертификатов Let'sEncrypt
-1. Устанавливаем sertbot и плагин для apache2
-```
-apt install certbot python3-certbot-apache
-``` 
-2. Запускаем процедуру получения сертификатов. Отвечаем на вопросы интерактивной установки.
-Принимаем предложение сделать редирект всех запросов на 443 ssl порт.
-```
-certbot --apache
-```
-3. Прверяем планировщик обновлений сертификата
-```
-systemctl status certbot.timer
-```
-4. Повторный запуск sertbot в тестовом режиме для проверки валидности установки 
-```
-certbot renew --dry-run
-```
-<br/><br/>
-
-### Установка Webmin
-1. Добавляем репозиторий webmin в систему
-```
-echo "deb http://download.webmin.com/download/repository sarge contrib"   | tee -a /etc/apt/sources.list
-```
-2. Устанавливаем пакет для защищенной связи и хранения данных gnupg
-```
-apt install gnupg
-```
-3. Устанавливаем ключ репозитория и обновляем список пакетов
-```
-wget -q -O- http://www.webmin.com/jcameron-key.asc | sudo apt-key add
-apt update
-```
-4. Устанавливаем непосредственно webmin
-```
-apt install webmin
-```
-5. Проверяем доступ по адресу https://your_domain:10000
-<br/><br/>
+<br/><br
 
 ### Установка сервера БД MySQL
 По умолчанию в дистрибутив Ubuntu 20.04 включен пакет MySQL 8.0 Ввиду его прожорливости и
@@ -127,6 +117,37 @@ apt-cache policy mysql-server
 apt install -f mysql-client=5.7* mysql-community-server=5.7* mysql-server=5.7*
 ```
 <br/><br/>
+
+### Установка PHP
+1. Установка PHP
+```
+sudo apt install php libapache2-mod-php php-mysql
+```
+<br/><br
+
+
+
+### Получение сертификатов Let'sEncrypt
+1. Устанавливаем sertbot и плагин для apache2
+```
+apt install certbot python3-certbot-apache
+``` 
+2. Запускаем процедуру получения сертификатов. Отвечаем на вопросы интерактивной установки.
+Принимаем предложение сделать редирект всех запросов на 443 ssl порт.
+```
+certbot --apache
+```
+3. Прверяем планировщик обновлений сертификата
+```
+systemctl status certbot.timer
+```
+4. Повторный запуск sertbot в тестовом режиме для проверки валидности установки 
+```
+certbot renew --dry-run
+```
+<br/><br/>
+
+
 ### Установка средства администрирования БД phpMyAdmin
 1. Обновляем пакеты и ставим  phpMyAdmin вместе с зависимостями, перезапускаем apache2
 ```
@@ -157,7 +178,7 @@ systemctl restart apache2
 "Импорт" либо, если экспортировались только данные, то предварительно надо выполнить скрипт формирующий структуру базы.
 Так же как в п.1 необходимо назначить привилегии пользователю <b>emq</b>.
  
-
+ 
 <br/><br/>
 ### Установка и настройка MQTT брокера EMQX
 <br/><br/>
