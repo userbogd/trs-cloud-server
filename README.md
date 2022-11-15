@@ -71,7 +71,7 @@ apt update
 apt install apache2
 systemctl status apache2
 ```
-2. Настройка виртуальных хостов.	
+2. Настройка виртуальных хостов (только для iotronic).	
 - восстанавливаем структуру каталога /var/www
 - восстанавливаем структуру каталога конфигураций /etc/apache2/sites-available
 - применяем конфигурации 
@@ -123,11 +123,11 @@ apt install -f mysql-client=5.7* mysql-community-server=5.7* mysql-server=5.7*
 ```
 sudo apt install php libapache2-mod-php php-mysql
 ```
-<br/><br
+<br/><br>
 
+<details>
+<summary>### Получение сертификатов Let'sEncrypt (Только при наличии реального доменного имени)</summary>
 
-
-### Получение сертификатов Let'sEncrypt
 1. Устанавливаем sertbot и плагин для apache2
 ```
 apt install certbot python3-certbot-apache
@@ -137,7 +137,7 @@ apt install certbot python3-certbot-apache
 ```
 certbot --apache
 ```
-3. Прверяем планировщик обновлений сертификата
+3. Проверяем планировщик обновлений сертификата
 ```
 systemctl status certbot.timer
 ```
@@ -145,8 +145,9 @@ systemctl status certbot.timer
 ```
 certbot renew --dry-run
 ```
-<br/><br/>
 
+</details>
+<br/><br/>
 
 ### Установка средства администрирования БД phpMyAdmin
 1. Обновляем пакеты и ставим  phpMyAdmin вместе с зависимостями, перезапускаем apache2
@@ -162,6 +163,8 @@ systemctl restart apache2
 и дальше заходить в Servers->MySQL Database Server. 
 
 <br/><br/>
+
+
 ### Создание, сохранение и восстановление базы данных пользователей MQTT брокера
 Права доступа пользователей к MQTT брокеру (используем брокер EMQX) содержатся в базе данных MySQL и
 используются брокером через плагин emqx_auth_mysql, который устанавливается автоматически вместе с брокером.
