@@ -87,7 +87,7 @@ systemctl stop apache2
 systemctl start apache2
 systemctl restart apache2
 ```
-<br/><br
+<br/><br/>
 
 ### Установка сервера БД MySQL
 По умолчанию в дистрибутив Ubuntu 20.04 включен пакет MySQL 8.0 Ввиду его прожорливости и
@@ -123,10 +123,12 @@ apt install -f mysql-client=5.7* mysql-community-server=5.7* mysql-server=5.7*
 ```
 sudo apt install php libapache2-mod-php php-mysql
 ```
-<br/><br>
+<br/><br/>
 
 <details>
-<summary>### Получение сертификатов Let'sEncrypt (Только при наличии реального доменного имени)</summary>
+<summary>Let's encrypt installation</summary>
+
+### Получение сертификатов Let'sEncrypt (Только при наличии реального доменного имени)
 
 1. Устанавливаем sertbot и плагин для apache2
 ```
@@ -145,8 +147,8 @@ systemctl status certbot.timer
 ```
 certbot renew --dry-run
 ```
-
 </details>
+
 <br/><br/>
 
 ### Установка средства администрирования БД phpMyAdmin
