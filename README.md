@@ -2,10 +2,10 @@
 
 ### Исходные требования
 1. Установленный дистрибутив Ubuntu 20.04 
-2. Права админимтратора
+2. Права админиcтратора
 3. Доступ по SSH
 
-Все настройки далее производятся от имени аминистратора, для их получения необходимо ввести 
+Все настройки далее производятся от имени аминистратора, для их получения необходимо ввести: 
 ```
 sudo su
 ```
@@ -20,7 +20,7 @@ PermitRootLogin yes
 
 
 ### Предварительная настройка iptables
-1. Устанавливаем пакет для сохранения временных настроек iptables
+1. Устанавливаем пакет для сохранения временных настроек iptables:
 ```
 apt-get install iptables-persistent
 ```
@@ -28,12 +28,12 @@ apt-get install iptables-persistent
 https://github.com/userbogd/trs-cloud-server/blob/main/iptables.sh
 Скрипт содержит все правила фильтрации и маршрутизации, необходимые на начальном этапе конфигурирования
 
-3. Сохраняем для применения после перезагрузки
+3. Сохраняем для применения после перезагрузки:
 ```
 /sbin/iptables-save > /etc/iptables/rules.v4
 /sbin/iptables-save > /etc/iptables/rules.v6
 ```
-4. Для работы форвардинга необходимо в файле /etc/sysctl.conf установить 
+4. Для работы форвардинга необходимо в файле /etc/sysctl.conf установить: 
 ```
 net.ipv4.ip_forward=1
 ```
@@ -43,20 +43,20 @@ net.ipv4.ip_forward=1
 
 
 ### Установка Webmin
-1. Добавляем репозиторий webmin в систему
+1. Добавляем репозиторий Webmin в систему:
 ```
 echo "deb http://download.webmin.com/download/repository sarge contrib"   | tee -a /etc/apt/sources.list
 ```
-2. Устанавливаем пакет для защищенной связи и хранения данных gnupg
+2. Устанавливаем пакет для защищенной связи и хранения данных gnupg:
 ```
 apt install gnupg
 ```
-3. Устанавливаем ключ репозитория и обновляем список пакетов
+3. Устанавливаем ключ репозитория и обновляем список пакетов:
 ```
 wget -q -O- http://www.webmin.com/jcameron-key.asc | sudo apt-key add
 apt update
 ```
-4. Устанавливаем непосредственно webmin
+4. Устанавливаем непосредственно Webmin:
 ```
 apt install webmin
 ```
@@ -65,23 +65,34 @@ apt install webmin
 
 
 ### Установка веб-сервера APACHE2
-1. Установка непосредственно apache2
+1. Установка непосредственно Apache2:
 ```
 apt update
 apt install apache2
 systemctl status apache2
 ```
+
+<details>
+<summary>
 2. Настройка виртуальных хостов (только для iotronic).	
+</summary>
+
 - восстанавливаем структуру каталога /var/www
 - восстанавливаем структуру каталога конфигураций /etc/apache2/sites-available
-- применяем конфигурации 
+- применяем конфигурации: 
+  
 ```
 a2ensite iotronic.cloud.conf
 a2ensite m1.iotronic.cloud.conf
 a2ensite www.iotronic.cloud.conf
 a2ensite tmrsystems.ru.conf
 ```
-3. Команды управления сервером 
+
+</details>
+</br><br>
+
+  3. Команды управления сервером
+   
 ```
 systemctl stop apache2
 systemctl start apache2
@@ -205,5 +216,3 @@ apt install postgresql postgresql-contrib
 ### Установка и настройка ChirpstackNetworkServer и ChirpstackApplicationServer
 <br/><br/>
 ### Установка и настройка PPP VPN сервера
-
-### Test edit
